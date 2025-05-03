@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CosmoShop - Search</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">CosmoShop</div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search cosmetics...">
+                <button>🔍</button>
+            </div>
+            <div class="user-actions">
+                <span class="account">👤</span>
+                <span class="cart">
+                    🛒 <span id="cart-count">0</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main class="search-page">
+        <div class="filters">
+            <h3>Filters</h3>
+            <div class="filter-section">
+                <h4>Price Range</h4>
+                <input type="range" min="0" max="100" value="50">
+                <span>$0 - $100</span>
+            </div>
+            <div class="filter-section">
+                <h4>Category</h4>
+                <label><input type="checkbox"> Skincare</label>
+                <label><input type="checkbox"> Makeup</label>
+                <label><input type="checkbox"> Perfume</label>
+            </div>
+            <div class="filter-section">
+                <h4>Color</h4>
+                <div class="color-options">
+                    <span class="color-block" style="background: #ff4971;"></span>
+                    <span class="color-block" style="background: #f38eb4;"></span>
+                    <span class="color-block" style="background: #fcd6e6;"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-results">
+            <h2>Search Results</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="https://via.placeholder.com/200x200" alt="Product">
+                    <h3>Lipstick</h3>
+                    <p class="price">$15.99</p>
+                    <div class="rating">★★★★☆</div>
+                    <button class="add-to-cart" data-id="1">Add to Cart</button>
+                </div>
+                <!-- Add more product cards -->
+            </div>
+        </div>
+    </main>
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CosmoShop - Product Details</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">CosmoShop</div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search cosmetics...">
+                <button>🔍</button>
+            </div>
+            <div class="user-actions">
+                <span class="account">👤</span>
+                <span class="cart">
+                    🛒 <span id="cart-count">0</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main class="product-page">
+        <div class="product-images">
+            <img src="https://via.placeholder.com/400x400" alt="Product" class="main-image">
+            <div class="thumbnails">
+                <img src="https://via.placeholder.com/100x100" alt="Thumbnail">
+                <img src="https://via.placeholder.com/100x100" alt="Thumbnail">
+                <img src="https://via.placeholder.com/100x100" alt="Thumbnail">
+            </div>
+        </div>
+
+        <div class="product-details">
+            <h1>Luxury Lipstick</h1>
+            <div class="rating">★★★★☆ (4.3 - 250 reviews)</div>
+            <p class="price">$15.99</p>
+            <p class="stock">In Stock</p>
+
+            <div class="options">
+                <div class="option">
+                    <label>Shade:</label>
+                    <select>
+                        <option>Ruby Red</option>
+                        <option>Pink Blossom</option>
+                        <option>Nude Glow</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="add-to-cart" data-id="1">Add to Cart</button>
+                <button class="buy-now">Buy Now</button>
+            </div>
+        </div>
+    </main>
+    <script src="js/script.js"></script>
+</body>
+</html>
