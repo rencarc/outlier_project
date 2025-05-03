@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Men's Toiletries - Dr. Squatch Inspired</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #F9F6F0;
+        }
+
+        /* Navigation Bar */
+        header {
+            background-color: #2E4A32;
+            color: white;
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-menu li {
+            position: relative;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .nav-menu a:hover {
+            color: #E26A2C;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: white;
+            color: black;
+            top: 100%;
+            left: 0;
+            width: 600px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .dropdown:hover {
+            display: block;
+        }
+
+        .nav-menu li:hover .dropdown {
+            display: block;
+        }
+
+        .dropdown-column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .dropdown-column h4 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .dropdown-column a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .dropdown-column a:hover {
+            color: #E26A2C;
+        }
+
+        .user-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .user-icons i {
+            color: white;
+            font-size: 20px;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Promotional Banner */
+        .promo-banner {
+            background-color: #2E4A32;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+        }
+
+        .promo-banner .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        /* Hero Banner */
+        .hero {
+            background: url('https://via.placeholder.com/1200x500?text=Hero+Background') no-repeat center center/cover;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 20px;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-text {
+            max-width: 50%;
+        }
+
+        .hero-text h1 {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .cta-btn {
+            background-color: #E26A2C;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .cta-btn:hover {
+            background-color: #C45824;
+        }
+
+        .hero-image img {
+            max-width: 300px;
+            height: auto;
+        }
+
+        /* Best Sellers Section */
+        .best-sellers {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .best-sellers h2 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .product-card h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .price .current {
+            font-size: 16px;
+        }
+
+        .price .original {
+            font-size: 14px;
+            text-decoration: line-through;
+            color: #777;
+        }
+
+        .price .discount {
+            font-size: 14px;
+            color: red;
+        }
+
+        .rating {
+            margin-bottom: 10px;
+        }
+
+        .rating i {
+            color: #E26A2C;
+        }
+
+        .add-to-cart, .subscribe-btn {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .add-to-cart {
+            background-color: #E26A2C;
+            color: white;
+            border: none;
+        }
+
+        .add-to-cart:hover {
+            background-color: #C45824;
+        }
+
+        .subscribe-btn {
+            background-color: transparent;
+            border: 1px solid #E26A2C;
+            color: #E26A2C;
+        }
+
+        .subscribe-btn:hover {
+            background-color: #E26A2C;
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: #2E4A32;
+                padding: 20px;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .dropdown {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                height: auto;
+                padding: 40px 20px;
+            }
+
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text {
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .hero-image img {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Promotional Banner -->
+    <div class="promo-banner" id="promoBanner">
+        SAVE UP TO 30% - Subscribe Today!
+        <span class="close-btn" onclick="closePromoBanner()">×</span>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">Dr. Squatch</div>
+            <span class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></span>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#">Subscribe</a></li>
+                <li>
+                    <a href="#">Shop</a>
+                    <div class="dropdown">
+                        <div style="display: flex; gap: 20px;">
+                            <div class="dropdown-column">
+                                <h4>Bar Soap</h4>
+                                <a href="#">Bar Soap</a>
+                                <a href="#">Total Moisture</a>
+                                <a href="#">All Soap & Body Wash</a>
+                            </div>
+                            <div class="dropdown-column">
+                                <h4>Deodorant</h4>
+                                <a href="#">Stick Deodorant</a>
+                                <a href="#">All Deodorant</a>
+                            </div>
+                            <div class="dropdown-column">
+                                <h4>Hair Care</h4>
+                                <a href="#">Hair Kits</a>
+                                <a href="#">Shampoo</a>
+                                <a href="#">Conditioner</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#">Our Story</a></li>
+            </ul>
+            <div class="user-icons">
+                <i class="fas fa-user"></i>
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>JUST WHAT THE DOCTOR ORDERED</h1>
+                <p>Natural products, designed for men, in fresh, manly scents.</p>
+                <button class="cta-btn">Shop Bar Soap</button>
+            </div>
+            <div class="hero-image">
+                <img src="https://via.placeholder.com/300x300?text=Product+Image" alt="Product Image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers Section -->
+    <section class="best-sellers">
+        <h2>Best Sellers</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300x200?text=Product+1" alt="Product 1">
+                <h3>Bar Soap 6-Pack</h3>
+                <div class="price">
+                    <span class="current">€77.00</span>
+                    <span class="original">€100.00</span>
+                    <span class="discount">Save 23%</span>
+                </div>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <span>86 Reviews</span>
+                </div>
+                <button class="add-to-cart" onclick="addToCart('Bar Soap 6-Pack')">+ Add to Cart</button>
+                <button class="subscribe-btn" onclick="subscribe('Bar Soap 6-Pack')">Subscribe & Save €11</button>
+            </div>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300x200?text=Product+2" alt="Product 2">
+                <h3>Deodorant 6-Pack</h3>
+                <div class="price">
+                    <span class="current">€66.00</span>
+                    <span class="original">€84.00</span>
+                    <span class="discount">Save 21%</span>
+                </div>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <span>48 Reviews</span>
+                </div>
+                <button class="add-to-cart" onclick="addToCart('Deodorant 6-Pack')">+ Add to Cart</button>
+                <button class="subscribe-btn" onclick="subscribe('Deodorant 6-Pack')">Subscribe & Save €6</button>
+            </div>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300x200?text=Product+3" alt="Product 3">
+                <h3>Cologne 3-Pack</h3>
+                <div class="price">
+                    <span class="current">€169.00</span>
+                    <span class="original">€197.00</span>
+                    <span class="discount">Save 14%</span>
+                </div>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <span>20 Reviews</span>
+                </div>
+                <button class="add-to-cart" onclick="addToCart('Cologne 3-Pack')">+ Add to Cart</button>
+                <button class="subscribe-btn" onclick="subscribe('Cologne 3-Pack')">Subscribe & Save €20</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Toggle Mobile Menu
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Close Promotional Banner
+        function closePromoBanner() {
+            const banner = document.getElementById('promoBanner');
+            banner.style.display = 'none';
+        }
+
+        // Add to Cart Functionality
+        function addToCart(productName) {
+            alert(`${productName} has been added to your cart!`);
+        }
+
+        // Subscribe Functionality
+        function subscribe(productName) {
+            alert(`Subscribed to ${productName}! You will receive regular updates and savings.`);
+        }
+    </script>
+</body>
+</html>
