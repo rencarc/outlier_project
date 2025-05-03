@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord-like Chat Platform</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Inter, Segoe UI, system-ui, sans-serif;
+        }
+
+        body {
+            background-color: #f6f6f6;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background: linear-gradient(to bottom, #e0f7ec, #b2dfdb);
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        .logo {
+            background: #5865f2;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .nav-buttons button {
+            background: none;
+            border: none;
+            padding: 10px;
+            text-align: left;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .nav-buttons button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .direct-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .friend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .friend-item:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #ccc;
+        }
+
+        .status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #43b581;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border: 2px solid #f6f6f6;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .user-info button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .user-info button:hover {
+            color: #5865f2;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .search-bar {
+            padding: 10px;
+            background: white;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Friends Page */
+        .friends-page {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 20px;
+            overflow-y: auto;
+        }
+
+        .online-friends {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .friend-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .friend-card:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Chat Page */
+        .chat-page {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 10px;
+            background: white;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-header button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .chat-header button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .chat-log {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .message .avatar {
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            background: #e0e0e0;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 70%;
+        }
+
+        .message-content .username {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .message-content .timestamp {
+            font-size: 12px;
+            color: #666;
+            margin-left: 10px;
+        }
+
+        .chat-input {
+            padding: 10px;
+            background: white;
+            border-top: 1px solid #ddd;
+            position: sticky;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-input textarea {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+            font-size: 14px;
+        }
+
+        .chat-input button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .chat-input button:hover {
+            color: #5865f2;
+        }
+
+        /* Right Sidebar */
+        .right-sidebar {
+            width: 240px;
+            background: white;
+            border-left: 1px solid #ddd;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transition: width 0.3s;
+        }
+
+        .right-sidebar.collapsed {
+            width: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .friend-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .banner {
+            height: 100px;
+            background: url('https://via.placeholder.com/240x100') no-repeat center;
+            background-size: cover;
+            border-radius: 5px;
+        }
+
+        .friend-details .avatar {
+            margin-top: -40px;
+            margin-left: 10px;
+        }
+
+        .friend-details button {
+            padding: 10px;
+            background: #5865f2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .friend-details button:hover {
+            background: #4752c4;
+        }
+
+        /* Active Now Section */
+        .active-now {
+            width: 240px;
+            background: white;
+            border-left: 1px solid #ddd;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .right-sidebar, .active-now {
+                display: none;
+            }
+
+            .main-content {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">D</div>
+        <div class="nav-buttons">
+            <button>Friends</button>
+            <button>Nitro</button>
+            <button>Shop</button>
+        </div>
+        <div class="direct-messages">
+            <div class="friend-item" onclick="switchToChat('Peder Linder')">
+                <div class="avatar" style="position: relative;">
+                    <div class="status"></div>
+                </div>
+                <span>Peder Linder (Cillers)</span>
+            </div>
+        </div>
+        <div class="user-info">
+            <div class="avatar" style="position: relative;">
+                <div class="status"></div>
+            </div>
+            <span>Zhen Xu</span>
+            <button>🎙️</button>
+            <button>⚙️</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Friends Page -->
+        <div class="friends-page" id="friends-page">
+            <div class="search-bar">
+                <input type="text" placeholder="Find or start a conversation">
+            </div>
+            <div class="online-friends">
+                <h3>Online — 1</h3>
+                <div class="friend-card" onclick="switchToChat('Peder Linder')">
+                    <div class="avatar" style="position: relative;">
+                        <div class="status"></div>
+                    </div>
+                    <span>Peder Linder (Cillers)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Page -->
+        <div class="chat-page" id="chat-page" style="display: none;">
+            <div class="chat-header">
+                <div class="avatar" style="position: relative;">
+                    <div class="status"></div>
+                </div>
+                <span id="chat-friend-name">Peder Linder (Cillers)</span>
+                <button>Remove Friend</button>
+                <button>Block</button>
+            </div>
+            <div class="chat-log" id="chat-log">
+                <div class="message">
+                    <div class="avatar"></div>
+                    <div class="message-content">
+                        <span class="username">Zhen Xu</span>
+                        <span class="timestamp">3/29/25, 12:11 PM</span>
+                        <p>Hey, here is the solution from group 404—missing nothing</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <textarea placeholder="Message @Peder Linder (Cillers)" id="message-input"></textarea>
+                <button onclick="insertEmoji()">😊</button>
+                <button>📎</button>
+                <button>🎁</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="right-sidebar" id="right-sidebar">
+        <div class="friend-details">
+            <div class="banner"></div>
+            <div class="avatar" style="position: relative;">
+                <div class="status"></div>
+            </div>
+            <h3>Peder Linder (Cillers)</h3>
+            <p><strong>About Me:</strong> Founder Cillers, Hackathon organizer.</p>
+            <p><strong>Member Since:</strong> Apr 26, 2018</p>
+            <p><strong>Mutual Servers:</strong> 1</p>
+            <button>View Full Profile</button>
+        </div>
+    </div>
+
+    <!-- Active Now Section -->
+    <div class="active-now" id="active-now">
+        <h3>Active Now</h3>
+        <p>We can customize Active Now, and other parts of Discord...</p>
+        <button onclick="toggleActiveNow()">Yes, count me in!</button>
+        <button>No thanks</button>
+    </div>
+
+    <script>
+        // Page Switching
+        function switchToChat(friendName) {
+            document.getElementById('friends-page').style.display = 'none';
+            document.getElementById('chat-page').style.display = 'flex';
+            document.getElementById('active-now').style.display = 'none';
+            document.getElementById('right-sidebar').style.display = 'flex';
+            document.getElementById('chat-friend-name').textContent = friendName;
+        }
+
+        // Message Sending
+        const messageInput = document.getElementById('message-input');
+        const chatLog = document.getElementById('chat-log');
+
+        messageInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const messageText = messageInput.value.trim();
+            if (messageText) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.innerHTML = `
+                    <div class="avatar"></div>
+                    <div class="message-content">
+                        <span class="username">Zhen Xu</span>
+                        <span class="timestamp">${new Date().toLocaleString()}</span>
+                        <p>${messageText}</p>
+                    </div>
+                `;
+                chatLog.appendChild(messageDiv);
+                messageInput.value = '';
+                chatLog.scrollTop = chatLog.scrollHeight;
+            }
+        }
+
+        // Emoji Insertion (Placeholder)
+        function insertEmoji() {
+            messageInput.value += '😊';
+            messageInput.focus();
+        }
+
+        // Toggle Active Now Section
+        function toggleActiveNow() {
+            const activeNow = document.getElementById('active-now');
+            activeNow.style.display = activeNow.style.display === 'none' ? 'flex' : 'none';
+        }
+
+        // Toggle Right Sidebar
+        document.getElementById('right-sidebar').addEventListener('click', () => {
+            const sidebar = document.getElementById('right-sidebar');
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
+</body>
+</html>
